@@ -1,0 +1,318 @@
+//day 71
+#include <stdio.h>
+
+int main() {
+    FILE *fp = fopen("info.txt", "w");
+    if (fp == NULL) {
+        printf("Error opening file.\n");
+        return 1;
+    }
+
+    char name[50];
+    int age;
+
+    printf("Enter your name: ");
+    scanf("%s", name);
+    printf("Enter your age: ");
+    scanf("%d", &age);
+
+    fprintf(fp, "Name: %s\nAge: %d\n", name, age);
+    fclose(fp);
+
+    printf("Data successfully saved to info.txt\n");
+    return 0;
+}
+
+//day 72
+#include <stdio.h>
+
+int main() {
+    FILE *fp = fopen("info.txt", "r");
+    if (fp == NULL) {
+        printf("File does not exist.\n");
+        return 1;
+    }
+
+    char line[200];
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        printf("%s", line);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+//day 73
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    FILE *fp = fopen("input.txt", "r");
+    if (fp == NULL) {
+        printf("File not found.\n");
+        return 1;
+    }
+
+    int chars = 0, words = 0, lines = 0;
+    char c, prev = ' ';
+
+    while ((c = fgetc(fp)) != EOF) {
+        chars++;
+        if (c == '\n') lines++;
+        if (isspace(c) && !isspace(prev)) words++;
+        prev = c;
+    }
+
+    // If file is not empty, count last word if not followed by space
+    if (!isspace(prev)) words++;
+
+    printf("Characters: %d\nWords: %d\nLines: %d\n", chars, words, lines);
+    fclose(fp);
+    return 0;
+}
+
+
+//day 74
+#include <stdio.h>
+
+int main() {
+    char src[100], dest[100];
+    printf("Enter source filename: ");
+    scanf("%s", src);
+    printf("Enter destination filename: ");
+    scanf("%s", dest);
+
+    FILE *fs = fopen(src, "r");
+    if (fs == NULL) {
+        printf("Source file does not exist.\n");
+        return 1;
+    }
+
+    FILE *fd = fopen(dest, "w");
+    if (fd == NULL) {
+        printf("Cannot create destination file.\n");
+        fclose(fs);
+        return 1;
+    }
+
+    char c;
+    while ((c = fgetc(fs)) != EOF) {
+        fputc(c, fd);
+    }
+
+    fclose(fs);
+    fclose(fd);
+    printf("File copied successfully.\n");
+    return 0;
+}
+
+//day 75
+#include <stdio.h>
+
+int main() {
+    char filename[100];
+    printf("Enter filename: ");
+    scanf("%s", filename);
+
+    FILE *fp = fopen(filename, "r");
+    if (fp == NULL) {
+        printf("File does not exist.\n");
+        return 1;
+    }
+
+    char c;
+    while ((c = fgetc(fp)) != EOF) {
+        putchar(c);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+//day 76
+#include <stdio.h>
+
+int main() {
+    char filename[100];
+    printf("Enter filename: ");
+    scanf("%s", filename);
+
+    FILE *fp = fopen(filename, "r");
+    if (fp == NULL) {
+        printf("File does not exist.\n");
+        return 1;
+    }
+
+    char c;
+    while ((c = fgetc(fp)) != EOF) {
+        putchar(c);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+//day 77
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    FILE *fin = fopen("input.txt", "r");
+    FILE *fout = fopen("output.txt", "w");
+
+    if (fin == NULL || fout == NULL) {
+        printf("Error opening file.\n");
+        return 1;
+    }
+
+    char c;
+    while ((c = fgetc(fin)) != EOF) {
+        fputc(toupper(c), fout);
+    }
+
+    fclose(fin);
+    fclose(fout);
+    printf("Conversion to uppercase completed.\n");
+    return 0;
+}
+
+//day 78
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    FILE *fp = fopen("file.txt", "r");
+    if (fp == NULL) {
+        printf("File not found.\n");
+        return 1;
+    }
+
+    int vowels = 0, consonants = 0;
+    char c;
+    while ((c = fgetc(fp)) != EOF) {
+        if (isalpha(c)) {
+            char ch = tolower(c);
+            if (ch=='a'||ch=='e'||ch=='i'||ch=='o'||ch=='u')
+                vowels++;
+            else
+                consonants++;
+        }
+    }
+
+    printf("Vowels: %d\nConsonants: %d\n", vowels, consonants);
+    fclose(fp);
+    return 0;
+}
+//day 77
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    FILE *fin = fopen("input.txt", "r");
+    FILE *fout = fopen("output.txt", "w");
+
+    if (fin == NULL || fout == NULL) {
+        printf("Error opening file.\n");
+        return 1;
+    }
+
+    char c;
+    while ((c = fgetc(fin)) != EOF) {
+        fputc(toupper(c), fout);
+    }
+
+    fclose(fin);
+    fclose(fout);
+    printf("Conversion to uppercase completed.\n");
+    return 0;
+}
+
+//day 78
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    FILE *fp = fopen("file.txt", "r");
+    if (fp == NULL) {
+        printf("File not found.\n");
+        return 1;
+    }
+
+    int vowels = 0, consonants = 0;
+    char c;
+    while ((c = fgetc(fp)) != EOF) {
+        if (isalpha(c)) {
+            char ch = tolower(c);
+            if (ch=='a'||ch=='e'||ch=='i'||ch=='o'||ch=='u')
+                vowels++;
+            else
+                consonants++;
+        }
+    }
+
+    printf("Vowels: %d\nConsonants: %d\n", vowels, consonants);
+    fclose(fp);
+    return 0;
+}
+
+//day 79
+#include <stdio.h>
+
+int main() {
+    FILE *fp = fopen("numbers.txt", "r");
+    if (fp == NULL) {
+        printf("File not found.\n");
+        return 1;
+    }
+
+    int num, sum = 0, count = 0;
+    while (fscanf(fp, "%d", &num) != EOF) {
+        sum += num;
+        count++;
+    }
+
+    if (count == 0) {
+        printf("No numbers in file.\n");
+    } else {
+        printf("Sum = %d\nAverage = %.2f\n", sum, (float)sum/count);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+//day 80
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Enter number of students: ");
+    scanf("%d", &n);
+
+    char name[50];
+    int roll;
+    float marks;
+
+    FILE *fp = fopen("students.txt", "w");
+    if (fp == NULL) {
+        printf("Error opening file.\n");
+        return 1;
+    }
+
+    for (int i=0; i<n; i++) {
+        printf("Enter name, roll number, marks: ");
+        scanf("%s %d %f", name, &roll, &marks);
+        fprintf(fp, "%s %d %.2f\n", name, roll, marks);
+    }
+    fclose(fp);
+
+    printf("\nStored Records:\n");
+
+    fp = fopen("students.txt", "r");
+    while (fscanf(fp, "%s %d %f", name, &roll, &marks) != EOF) {
+        printf("Name: %s, Roll: %d, Marks: %.2f\n", name, roll, marks);
+    }
+
+    fclose(fp);
+    return 0;
+}
