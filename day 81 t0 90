@@ -1,0 +1,162 @@
+//day 81
+#include <stdio.h>
+
+enum Days {SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY};
+
+int main() {
+    enum Days d;
+    for(d = SUNDAY; d <= SATURDAY; d++) {
+        printf("Day %d\n", d);
+    }
+    return 0;
+}
+
+//day 82
+#include <stdio.h>
+
+enum Traffic {RED, YELLOW, GREEN};
+
+int main() {
+    enum Traffic t;
+    for(t = RED; t <= GREEN; t++) {
+        if(t == RED) printf("Stop\n");
+        else if(t == YELLOW) printf("Wait\n");
+        else if(t == GREEN) printf("Go\n");
+    }
+    return 0;
+}
+
+
+//day 83
+#include <stdio.h>
+
+enum Months {JAN=1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC};
+
+int main() {
+    int days[] = {0,31,28,31,30,31,30,31,31,30,31,30,31}; // 0th index unused
+    for(int m = JAN; m <= DEC; m++) {
+        printf("Month %d has %d days\n", m, days[m]);
+    }
+    return 0;
+}
+
+//day 84
+#include <stdio.h>
+
+enum Status {SUCCESS, FAILURE, TIMEOUT};
+
+int main() {
+    enum Status s;
+    for(s = SUCCESS; s <= TIMEOUT; s++) {
+        if(s == SUCCESS) printf("Operation successful\n");
+        else if(s == FAILURE) printf("Operation failed\n");
+        else printf("Operation timed out\n");
+    }
+    return 0;
+}
+
+//day 85
+#include <stdio.h>
+
+enum Numbers {A=10, B, C, D};
+
+int main() {
+    printf("A=%d, B=%d, C=%d, D=%d\n", A, B, C, D);
+    return 0;
+}
+
+
+//day 86
+#include <stdio.h>
+
+enum Menu {ADD, SUBTRACT, MULTIPLY};
+
+int main() {
+    enum Menu choice;
+    int a, b;
+    printf("Enter two numbers: ");
+    scanf("%d %d", &a, &b);
+    printf("Enter choice (0-ADD,1-SUBTRACT,2-MULTIPLY): ");
+    scanf("%d", &choice);
+
+    switch(choice) {
+        case ADD: printf("Sum = %d\n", a+b); break;
+        case SUBTRACT: printf("Difference = %d\n", a-b); break;
+        case MULTIPLY: printf("Product = %d\n", a*b); break;
+        default: printf("Invalid choice\n");
+    }
+    return 0;
+}
+
+
+//day 87
+#include <stdio.h>
+
+enum Role {ADMIN, USER, GUEST};
+
+int main() {
+    enum Role r;
+    printf("Enter role (0-ADMIN, 1-USER, 2-GUEST): ");
+    scanf("%d", &r);
+
+    switch(r) {
+        case ADMIN: printf("Welcome Admin!\n"); break;
+        case USER: printf("Welcome User!\n"); break;
+        case GUEST: printf("Welcome Guest!\n"); break;
+        default: printf("Invalid role\n");
+    }
+    return 0;
+}
+
+//day 88 
+#include <stdio.h>
+
+enum Color {RED, GREEN, BLUE};
+
+int main() {
+    const char* names[] = {"RED","GREEN","BLUE"};
+    enum Color c;
+    for(c = RED; c <= BLUE; c++) {
+        printf("%s = %d\n", names[c], c);
+    }
+    return 0;
+}
+
+//day 89
+#include <stdio.h>
+
+enum Letters {X=5, Y, Z};
+
+int main() {
+    printf("X=%d, Y=%d, Z=%d\n", X, Y, Z);
+    return 0;
+}
+
+//day 90
+#include <stdio.h>
+
+enum Gender {MALE, FEMALE, OTHER};
+
+struct Person {
+    char name[50];
+    enum Gender g;
+};
+
+int main() {
+    struct Person p;
+    printf("Enter name: ");
+    scanf("%s", p.name);
+    int gen;
+    printf("Enter gender (0-MALE,1-FEMALE,2-OTHER): ");
+    scanf("%d", &gen);
+    p.g = gen;
+
+    printf("Name: %s, Gender: ", p.name);
+    switch(p.g) {
+        case MALE: printf("Male\n"); break;
+        case FEMALE: printf("Female\n"); break;
+        case OTHER: printf("Other\n"); break;
+    }
+
+    return 0;
+}
