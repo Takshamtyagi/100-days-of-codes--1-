@@ -1,0 +1,363 @@
+//day 51
+#include <stdio.h>
+
+int main() {
+    int n, target;
+    int nums[200];
+
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    printf("Enter %d sorted elements: ", n);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &nums[i]);
+
+    printf("Enter target: ");
+    scanf("%d", &target);
+
+    int first = -1, last = -1;
+
+    // Find first occurrence
+    for (int i = 0; i < n; i++) {
+        if (nums[i] == target) {
+            first = i;
+            break;
+        }
+    }
+
+    // Find last occurrence
+    for (int i = n - 1; i >= 0; i--) {
+        if (nums[i] == target) {
+            last = i;
+            break;
+        }
+    }
+
+    // Print result
+    if (first == -1)
+        printf("-1 -1\n");
+    else
+        printf("%d %d\n", first, last);
+
+    return 0;
+}
+
+//day 52
+#include <stdio.h>
+
+int main() {
+    int n, x;
+    int arr[200];
+
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    printf("Enter %d sorted elements: ", n);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    printf("Enter x: ");
+    scanf("%d", &x);
+
+    int index = -1;
+
+    // Find the ceil using linear scan (first element >= x)
+    for (int i = 0; i < n; i++) {
+        if (arr[i] >= x) {
+            index = i;
+            break;
+        }
+    }
+
+    printf("%d\n", index);
+
+    return 0;
+}
+
+//day 53
+#include <stdio.h>
+
+int main() {
+    int n, arr[200];
+
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    printf("Enter %d elements: ", n);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    int totalSum = 0;
+    for (int i = 0; i < n; i++)
+        totalSum += arr[i];
+
+    int leftSum = 0, pivot = -1;
+
+    for (int i = 0; i < n; i++) {
+        int rightSum = totalSum - leftSum - arr[i];
+
+        if (leftSum == rightSum) {
+            pivot = i;
+            break;          // leftmost pivot
+        }
+
+        leftSum += arr[i];
+    }
+
+    printf("%d\n", pivot);
+
+    return 0;
+}
+
+//day 54
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Enter a positive integer n: ");
+    scanf("%d", &n);
+
+    int totalSum = n * (n + 1) / 2;  // Sum of 1 to n
+    int leftSum = 0;
+    int pivot = -1;
+
+    for (int x = 1; x <= n; x++) {
+        leftSum += x;                  // sum from 1 to x
+        int rightSum = totalSum - (leftSum - x);  // sum from x to n
+
+        if (leftSum == rightSum) {
+            pivot = x;
+            break;                     // guaranteed at most one pivot
+        }
+    }
+
+    printf("%d\n", pivot);
+
+    return 0;
+}
+
+//day 55
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    int nums[200];
+    for (int i = 0; i < n; i++)
+        scanf("%d", &nums[i]);
+
+    int candidate = nums[0], count = 1;
+
+    // Step 1: Find a candidate using Boyer-Moore Majority Vote Algorithm
+    for (int i = 1; i < n; i++) {
+        if (nums[i] == candidate)
+            count++;
+        else {
+            count--;
+            if (count == 0) {
+                candidate = nums[i];
+                count = 1;
+            }
+        }
+    }
+
+    // Step 2: Verify if candidate is actually majority
+    count = 0;
+    for (int i = 0; i < n; i++) {
+        if (nums[i] == candidate)
+            count++;
+    }
+
+    if (count > n / 2)
+        printf("%d\n", candidate);
+    else
+        printf("-1\n");
+
+    return 0;
+}
+//day 56
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    int arr[200];
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    printf("Next Greater Elements: ");
+
+    for (int i = 0; i < n; i++) {
+        int next = -1;  // Default if no greater element exists
+
+        // Search for next greater element to the right
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] > arr[i]) {
+                next = arr[j];
+                break; // Found the nearest greater element
+            }
+        }
+
+        // Print in comma separated format
+        if (i != n - 1)
+            printf("%d, ", next);
+        else
+            printf("%d\n", next);
+    }
+
+    return 0;
+}
+
+//day 57
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    int arr[200];
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    printf("Previous Greater Elements: ");
+
+    for (int i = 0; i < n; i++) {
+        int prev = -1;  // Default if no greater element exists
+
+        // Search for previous greater element to the left
+        for (int j = i - 1; j >= 0; j--) {
+            if (arr[j] > arr[i]) {
+                prev = arr[j];
+                break; // Found the nearest greater element on left
+            }
+        }
+
+        // Print in comma separated format
+        if (i != n - 1)
+            printf("%d, ", prev);
+        else
+            printf("%d\n", prev);
+    }
+
+    return 0;
+}
+
+//day58
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    int nums[100], answer[100];
+
+    printf("Enter %d elements: ", n);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &nums[i]);
+
+    // Calculate product except self for each element
+    for (int i = 0; i < n; i++) {
+        int prod = 1;
+        for (int j = 0; j < n; j++) {
+            if (i != j)
+                prod *= nums[j];
+        }
+        answer[i] = prod;
+    }
+
+    // Print result
+    for (int i = 0; i < n; i++) {
+        if (i != n - 1)
+            printf("%d, ", answer[i]);
+        else
+            printf("%d\n", answer[i]);
+    }
+
+    return 0;
+}
+
+//day 59
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    int arr[200];
+    printf("Enter %d elements: ", n);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    printf("Enter size of subarray k: ");
+    scanf("%d", &k);
+
+    if (k > n) {
+        printf("Invalid input: k cannot be greater than array size.\n");
+        return 0;
+    }
+
+    int sum = 0, maxSum = 0;
+
+    // Calculate sum of first window
+    for (int i = 0; i < k; i++)
+        sum += arr[i];
+
+    maxSum = sum;
+
+    // Slide the window
+    for (int i = k; i < n; i++) {
+        sum = sum - arr[i - k] + arr[i]; // remove first element, add next element
+        if (sum > maxSum)
+            maxSum = sum;
+    }
+
+    printf("Maximum sum of subarrays of size %d is: %d\n", k, maxSum);
+
+    return 0;
+}
+
+//day 60
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    int arr[200];
+    printf("Enter %d elements: ", n);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    printf("Enter window size k: ");
+    scanf("%d", &k);
+
+    if (k > n) {
+        printf("Invalid input: k cannot be greater than array size.\n");
+        return 0;
+    }
+
+    printf("Maximum elements in each window: ");
+
+    // Iterate over each window
+    for (int i = 0; i <= n - k; i++) {
+        int max = arr[i];
+        // Find max in current window
+        for (int j = i + 1; j < i + k; j++) {
+            if (arr[j] > max)
+                max = arr[j];
+        }
+        printf("%d ", max);
+    }
+    printf("\n");
+
+    return 0;
+}
+
