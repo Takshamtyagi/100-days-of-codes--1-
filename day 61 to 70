@@ -1,0 +1,327 @@
+//day 61
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    int arr[200];
+    printf("Enter %d elements: ", n);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    printf("Enter window size k: ");
+    scanf("%d", &k);
+
+    if (k > n) {
+        printf("Invalid input: k cannot be greater than array size.\n");
+        return 0;
+    }
+
+    printf("First negative integers in each window: ");
+
+    // Loop through all windows
+    for (int i = 0; i <= n - k; i++) {
+        int found = 0; // Flag to indicate if a negative number is found
+
+        // Search for first negative in current window
+        for (int j = i; j < i + k; j++) {
+            if (arr[j] < 0) {
+                printf("%d ", arr[j]);
+                found = 1;
+                break;
+            }
+        }
+
+        // If no negative found, print 0
+        if (!found)
+            printf("0 ");
+    }
+
+    printf("\n");
+    return 0;
+}
+
+//day 62
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    int arr[200];
+    printf("Enter %d elements: ", n);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    int maxEndingHere = arr[0]; // Max sum ending at current index
+    int maxSoFar = arr[0];      // Overall max sum
+
+    for (int i = 1; i < n; i++) {
+        // Either extend the current subarray or start new from arr[i]
+        if (maxEndingHere + arr[i] > arr[i])
+            maxEndingHere = maxEndingHere + arr[i];
+        else
+            maxEndingHere = arr[i];
+
+        if (maxEndingHere > maxSoFar)
+            maxSoFar = maxEndingHere;
+    }
+
+    printf("Maximum sum of contiguous subarray: %d\n", maxSoFar);
+
+    return 0;
+}
+
+//day 63
+#include <stdio.h>
+
+int main() {
+    int n, k;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    int arr[200];
+    printf("Enter %d elements: ", n);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    printf("Enter k: ");
+    scanf("%d", &k);
+
+    if (k > n || k <= 0) {
+        printf("Invalid input for k.\n");
+        return 0;
+    }
+
+    // Simple Bubble Sort (or use any sorting method)
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+
+    // kth smallest element
+    printf("The %dth smallest element is: %d\n", k, arr[k - 1]);
+
+    return 0;
+}
+
+//day 64
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[200];
+    printf("Enter a string: ");
+    fgets(s, sizeof(s), stdin);
+    s[strcspn(s, "\n")] = '\0';
+
+    int n = strlen(s);
+    int maxLen = 0;
+
+    for (int i = 0; i < n; i++) {
+        int freq[256] = {0};
+        int len = 0;
+        for (int j = i; j < n; j++) {
+            if (freq[(unsigned char)s[j]] == 0) {
+                freq[(unsigned char)s[j]]++;
+                len++;
+            } else {
+                break;
+            }
+        }
+        if (len > maxLen)
+            maxLen = len;
+    }
+
+    printf("%d\n", maxLen);
+    return 0;
+}
+
+//day 65
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[100], t[100];
+    printf("Enter first string: ");
+    scanf("%s", s);
+    printf("Enter second string: ");
+    scanf("%s", t);
+
+    int freq[26] = {0};
+
+    for (int i = 0; s[i] != '\0'; i++)
+        freq[s[i]-'a']++;
+
+    for (int i = 0; t[i] != '\0'; i++)
+        freq[t[i]-'a']--;
+
+    int anagram = 1;
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] != 0) {
+            anagram = 0;
+            break;
+        }
+    }
+
+    printf("%s\n", anagram ? "Anagram" : "Not Anagram");
+    return 0;
+}
+
+//day 66
+#include <stdio.h>
+
+int main() {
+    int n, target;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    int nums[200];
+    for (int i = 0; i < n; i++)
+        scanf("%d", &nums[i]);
+
+    printf("Enter target: ");
+    scanf("%d", &target);
+
+    int found = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = i+1; j < n; j++) {
+            if (nums[i] + nums[j] == target) {
+                printf("%d %d\n", i, j);
+                found = 1;
+                break;
+            }
+        }
+        if (found) break;
+    }
+
+    if (!found)
+        printf("-1 -1\n");
+
+    return 0;
+}
+
+//day 67
+#include <stdio.h>
+
+int main() {
+    int m, n;
+    printf("Enter size of first array: ");
+    scanf("%d", &m);
+    int arr1[200];
+    for (int i = 0; i < m; i++)
+        scanf("%d", &arr1[i]);
+
+    printf("Enter size of second array: ");
+    scanf("%d", &n);
+    int arr2[200];
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr2[i]);
+
+    int merged[400], i=0, j=0, k=0;
+
+    while (i < m && j < n) {
+        if (arr1[i] <= arr2[j])
+            merged[k++] = arr1[i++];
+        else
+            merged[k++] = arr2[j++];
+    }
+
+    while (i < m) merged[k++] = arr1[i++];
+    while (j < n) merged[k++] = arr2[j++];
+
+    for (int t = 0; t < k; t++)
+        printf("%d ", merged[t]);
+    printf("\n");
+
+    return 0;
+}
+
+//day 68
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Enter size of array (n): ");
+    scanf("%d", &n);
+
+    int arr[200];
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    int total = n*(n+1)/2;
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += arr[i];
+
+    printf("%d\n", total - sum);
+    return 0;
+}
+
+//day 69
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Enter size of array: ");
+    scanf("%d", &n);
+
+    int arr[200];
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    int repeated = -1;
+    for (int i = 0; i < n; i++) {
+        int index = arr[i] % n;
+        arr[index] += n;
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i]/n > 1) {
+            repeated = i;
+            break;
+        }
+    }
+
+    printf("%d\n", repeated);
+    return 0;
+}
+
+//day 70
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int main() {
+    char str[200];
+    printf("Enter a string: ");
+    fgets(str, sizeof(str), stdin);
+    str[strcspn(str, "\n")] = '\0';
+
+    int capitalize = 1; // Flag to capitalize first letter
+
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (capitalize && isalpha(str[i])) {
+            str[i] = toupper(str[i]);
+            capitalize = 0;
+        } else {
+            str[i] = tolower(str[i]);
+        }
+        if (str[i] == '.' || str[i] == '!' || str[i] == '?')
+            capitalize = 1;
+    }
+
+    printf("%s\n", str);
+    return 0;
+}
+
+
+
